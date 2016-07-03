@@ -48,7 +48,7 @@ do
                 echo "[ERROR] ${line} is not a file"
             fi
         fi
-    done <"jsmfile"
+    done < "jsmfile"
     if ! diff ".jsm/old" ".jsm/new" >/dev/null 2>&1
     then
         cp ".jsm/new" "$1"
