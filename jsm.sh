@@ -37,18 +37,16 @@ do
     do
         if [[ ! "${line}" =~ ^# ]] && [ -n "${line}" ]
         then
-            if [ ! -f "${line}" ]
+            if [ -f "${line}" ]
             then
-                echo
+                echo "// BEGIN $(basename ${line})" >> ".jsm/new"
+                echo "" >> ".jsm/new"
+                cat "${line}" >> ".jsm/new"
+                echo "" >> ".jsm/new"
+                echo "// END $(basename ${line})" >> ".jsm/new"
+            else
                 echo "[ERROR] ${line} is not a file"
-                exit 4
             fi
-            echo "// BEGIN $(basename ${line})" >> ".jsm/new"
-            echo "" >> ".jsm/new"
-            cat "${line}" >> ".jsm/new"
-            echo "" >> ".jsm/new"
-            echo "// END $(basename ${line})" >> ".jsm/new"
-            echo "" >> ".jsm/new"
         fi
     done <"jsmfile"
     if ! diff ".jsm/old" ".jsm/new" >/dev/null 2>&1
